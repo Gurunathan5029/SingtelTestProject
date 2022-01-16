@@ -1,0 +1,21 @@
+#parse("/array.java.vm")
+#if ($packageName)
+package $packageName;
+
+#end##
+import io.cucumber.junit.CucumberOptions;
+import net.serenitybdd.cucumber.CucumberWithSerenity;
+import org.junit.runner.RunWith;
+
+@RunWith(CucumberWithSerenity.class)
+@CucumberOptions(
+features = {"$featureFile"},
+#if($tags.size() == 0)
+tags = "@ToDo",
+#elseif(!$featureFile.contains(".feature:") && $tags)
+tags = #stringArray($tags),
+#end
+plugin = "json:target/cucumber-reports/Cucumber.json",
+glue = "glue")
+public class $className {
+}
